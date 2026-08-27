@@ -709,8 +709,8 @@ class Config:
         """`speech` is the two-letter code of the language that was heard, when
         the transcription model reported one. The default prompts and the
         glossary rule only exist in Turkish and English, so a detected Turkish
-        recording gets the Turkish prompt and any other detected language — or
-        none at all — the English one, which is written not to care what
+        recording gets the Turkish prompt and any other detected language, or
+        none at all, the English one, which is written not to care what
         language the transcript is in. Nothing else calls this with it, so the
         interface language keeps deciding everywhere the speech was not asked
         about."""

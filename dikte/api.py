@@ -465,7 +465,7 @@ def transcribe_detected(target, audio_path, language="", prompt="", timeout=300,
     The spoken language is only knowable when the transcription model reports
     it, and only whisper.cpp does: the hosted endpoints accept "auto" but never
     say what they heard. So detection is asked for exactly where it can be
-    answered — the local server, in auto mode — and every other run transcribes
+    answered, the local server in auto mode, and every other run transcribes
     as before and hands back an empty code.
     """
     if target.provider == "local" and language == "auto":
