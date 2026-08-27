@@ -146,6 +146,10 @@ class Pipeline(QObject):
 
             text = raw
             warning = ""
+            # The language the run actually spoke, reported to the window, the
+            # clipboard path and the history alike: the detected code, or the
+            # configured one when nothing was detected to replace it.
+            speech_language = detected or conf["language"]
             # Remembered rather than re-derived at the history write below: the
             # ask path runs cleanup under a different setting, and the record
             # should say what happened, not what one of the two gates implies.
@@ -195,9 +199,7 @@ class Pipeline(QObject):
                 "question": question,
                 "assistant": assistant.provider(conf) if ask else "",
                 "assistant_model": assistant.model(conf) if ask else "",
-                # The language the run actually spoke: the detected code, or the
-                # configured one when nothing was detected to replace it.
-                "speech_language": detected or conf["language"],
+                "speech_language": speech_language,
                 "raw": raw,
                 "text": text,
             }
@@ -236,7 +238,7 @@ class Pipeline(QObject):
                     time.sleep(0.35)
                     paste.copy_bytes(previous)
 
-            self.finished.emit(raw, text, warning, detected)
+            self.finished.emit(raw, text, warning, speech_language)
 
         except assistant.Cancelled:
             self.cancelled.emit()
