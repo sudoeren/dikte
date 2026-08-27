@@ -717,9 +717,11 @@ class Config:
         turkish = (speech == "tr") if speech else i18n.language() == "tr"
         if subtitles:
             prompt = (self["file_cleanup_prompt"].strip()
-                      or default_file_cleanup_prompt())
+                      or (FILE_CLEANUP_PROMPT_TR if turkish
+                          else FILE_CLEANUP_PROMPT_EN))
         else:
-            prompt = self["cleanup_prompt"].strip() or default_cleanup_prompt()
+            prompt = (self["cleanup_prompt"].strip()
+                      or (CLEANUP_PROMPT_TR if turkish else CLEANUP_PROMPT_EN))
         glossary = self["transcribe_prompt"].strip()
         if with_speakers:
             glossary = "\n".join(x for x in (glossary, self.participants()) if x)

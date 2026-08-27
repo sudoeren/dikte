@@ -264,8 +264,10 @@ class CleanupPrompt(DikteTest):
         than the interface language."""
         self.write_config({"ui_language": "en", "transcribe_prompt": "Paraşüt"})
         conf = cfg.Config()
-        self.assertIn("KONUŞMACININ KULLANDIĞI İSİM VE TERİMLER",
-                      conf.cleanup_prompt(speech="tr"))
+        prompt = conf.cleanup_prompt(speech="tr")
+        self.assertEqual(prompt, cfg.CLEANUP_PROMPT_TR
+                         + cfg.GLOSSARY_RULE_TR.format(glossary="Paraşüt"))
+        self.assertIn("KONUŞMACININ KULLANDIĞI İSİM VE TERİMLER", prompt)
         self.assertIn("NAMES AND TERMS THE SPEAKER USES",
                       conf.cleanup_prompt(speech="de"))
 

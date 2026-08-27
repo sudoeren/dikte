@@ -476,8 +476,9 @@ def transcribe_detected(target, audio_path, language="", prompt="", timeout=300,
         text = _local_text(data.get("text") or "").strip()
         if not text:
             raise ApiError(t("Transcript came back empty."))
+        detected = data.get("detected_language")
         code = _DETECTED_TO_CODE.get(
-            (data.get("detected_language") or "").strip().lower(), "")
+            detected.strip().lower(), "") if isinstance(detected, str) else ""
         return text, code
     text = transcribe(target, audio_path, language=language, prompt=prompt,
                       timeout=timeout, aborter=aborter)
